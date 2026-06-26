@@ -1,0 +1,7 @@
+venv
+*.mod
+build/
+bin/
+.vscode/
+benchmark_c
+benchmark_fortran
