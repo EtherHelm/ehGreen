@@ -23,42 +23,42 @@
 
 For field point $P(x,y,z)$ and source point $Q(\xi,\eta,\zeta)$, the infinite depth pulsating source Green's function satisfies the free-surface condition
 
-$$
+```math
 -\omega^2 G(P,Q) + g\,G_z(P,Q) = 0
-$$
+```
 
 The expression is
 
-$$
+```math
 G(P,Q) = \frac{1}{r} + \frac{1}{r_1} + 2k_0 \int_0^\infty \frac{e^{k(z+\zeta)}}{k - k_0} J_0(kR)\,dk
-$$
+```
 
 where $k_0 = \omega^2 / g$, $R = \sqrt{(x-\xi)^2 + (y-\eta)^2}$, $r = \sqrt{R^2 + (z-\zeta)^2}$, $r_1 = \sqrt{R^2 + (z+\zeta)^2}$.
 
 Non-dimensionalized as
 
-$$
+```math
 \begin{aligned}
 G^*(P,Q) &= 2k_0 \int_0^\infty \frac{e^{k(z+\zeta)}}{k - k_0} J_0(kR)\,dk \\[2pt]
          &= k_0 F(X,Y) + 2\pi i\,k_0 e^{-Y} J_0(X)
 \end{aligned}
-$$
+```
 
 with $X = k_0 R$, $Y = -k_0 (z+\zeta)$,
 
-$$
+```math
 F(X,Y) = 2 \int_0^\infty \frac{e^{-Yt}}{t-1} J_0(Xt)\,dt
-$$
+```
 
 Partial derivatives
 
-$$
+```math
 \begin{aligned}
 G^*_x &= k_0^2 \frac{x-\xi}{R} \bigl(F_X(X,Y) - 2\pi i\,e^{-Y} J_1(X)\bigr) \\[2pt]
 G^*_y &= k_0^2 \frac{y-\eta}{R} \bigl(F_X(X,Y) - 2\pi i\,e^{-Y} J_1(X)\bigr) \\[2pt]
 G^*_z &= \frac{2k_0^2}{\sqrt{X^2 + Y^2}} + k_0 G^*
 \end{aligned}
-$$
+```
 
 ### API
 
