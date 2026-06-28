@@ -130,12 +130,13 @@ gfortran -Jbuild -shared -o bin/libehgreen.dll src/*.f90
 
 ## 基准测试
 
-在均匀网格（10000×1000）上对 `kernel_piz` 进行 1000 万次求值，使用 `examples/` 中的 Fortran 基准测试程序。
+通过 ISO_C_BINDING 从 `libehgreen.so` 调用 `kernel_piz` 1000 万次，使用 `examples/` 中的 Fortran 基准测试程序。每项指标取三次运行中的最低耗时。
 
-| 指标 | 耗时 |
-|------|------|
-| **单线程** | 0.41 s |
-| **32 线程（OpenMP）** | 0.018 s |
+| 指标 | 平台 1 | 平台 2 |
+|------|--------|--------|
+| **单线程** | 0.41 s | 0.141 s |
+| **OpenMP 多线程** | 0.018 s | 0.018 s |
 
-**平台：** AMD EPYC 7532 32-Core Processor @ 2.40 GHz（VMware 虚拟化）  
+**平台 1：** AMD EPYC 7532 32-Core Processor @ 2.40 GHz（VMware 虚拟化）  
+**平台 2：** AMD Ryzen 7 9700X 8-Core Processor @ 3.81 GHz（VM）  
 **编译器：** gfortran 13.3.0，编译选项：`-O3 -march=native -mtune=native -funroll-loops -ffast-math -flto -fopenmp`

@@ -14,15 +14,20 @@ NZ = 1000;
 
 r = double(0:NR-1) / NR * 38;
 z = double(0:NZ-1) / NZ * 15;
-res = zeros(NR, NZ, 4);
+% Flatten to paired 1D arrays of length n = NR * NZ
+[rr, zz] = meshgrid(r, z);
+r_flat = rr(:);
+z_flat = zz(:);
+n = NR * NZ;
+res = zeros(4, n);
 
 fprintf('[INFO] Calling kernel_piz_batch from libehgreen.so\n');
 
-%% Single call (batch processes all 10M evaluations internally)
+%% Single call (batch processes all evaluations internally)
 for epoch = 1:3
-    fprintf('--- Run %d (single call, 10M evaluations) ---\n', epoch);
+    fprintf('--- Run %d (single call, %d evaluations) ---\n', epoch, n);
     t0 = tic;
-    calllib('libehgreen', 'kernel_piz_batch', r, NR, z, NZ, res);
+    calllib('libehgreen', 'kernel_piz_batch', r_flat, z_flat, n, res);
     t1 = toc(t0);
     fprintf('    Elapsed: %8.3f s\n\n', t1);
 end

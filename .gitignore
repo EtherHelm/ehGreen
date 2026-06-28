@@ -5,3 +5,4 @@ bin/
 .vscode/
 benchmark_c
 benchmark_fortran
+matlab

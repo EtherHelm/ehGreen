@@ -62,27 +62,35 @@ contains
   endsubroutine
   function Y0H0fuse(x) result(res)
     implicit none
-    real(8)  ::  x,tmp,res
+    real(8)  ::  x,tmp,res,inv_x,sqrt_x,f0,theta0
 
     if(x <= 3.0d0) then
       tmp  =  x*x/9.0d0
       res  =  1.909859164d0+(-1.909855001d0+(0.687514637d0+(-0.126164557d0+(0.013828813d0-0.000876918d0*tmp)*tmp)*tmp)*tmp)*tmp
       res  =  res*(x/3.0d0)+Bessel_Y0(x)
     else
-      tmp  =  9.0d0/(x*x)
-      res  =  2*Bessel_Y0(x)+0.636619772367581d0*(0.99999906d0+(4.77228920d0+(3.85542044d0+0.32303607d0*tmp)*tmp)*tmp)/(x*(1.0d0+(4.88331068d0+(4.28957333d0+0.52120508d0*tmp)*tmp)*tmp))
+      inv_x = 1.0d0/x
+      tmp   = 9.0d0*inv_x*inv_x
+      sqrt_x = dsqrt(x)
+      f0 = 0.79788454d0+(-0.00553897d0+(0.00099336d0+(-0.00044346d0+(0.00020445d0-0.00004959d0*tmp)*tmp)*tmp)*tmp)*tmp
+      theta0 = x-0.785398163397448d0+(-0.04166592d0+(0.00239399d0+(-0.00073984d0+(0.00031099d0-0.00007605d0*tmp)*tmp)*tmp)*tmp)*3.0d0*inv_x
+      res = 2.0d0*f0*dsin(theta0)/sqrt_x+0.636619772367581d0*(0.99999906d0+(4.77228920d0+(3.85542044d0+0.32303607d0*tmp)*tmp)*tmp)/(x*(1.0d0+(4.88331068d0+(4.28957333d0+0.52120508d0*tmp)*tmp)*tmp))
     endif
   endfunction
   function Y1H1fuse(x) result(res)
     implicit none
-    real(8)  ::  x,tmp,res
+    real(8)  ::  x,tmp,res,inv_x,sqrt_x,f0,theta0
 
     if(x <= 3.0d0) then
       tmp  =  x*x/9.0d0
       res  =  (1.909859286d0+(-1.145914713d0+(0.294656958d0+(-0.042070508d0+(0.003785727d0-0.000207183d0*tmp)*tmp)*tmp)*tmp)*tmp)*tmp+Bessel_Y1(x)-0.636619772367581d0
     else
-      tmp  =  9.0d0/(x*x)
-      res  =  2*Bessel_Y1(x)+0.636619772367581d0*(1.00000004d0+(3.92205313d0+(2.64893033d0+0.27450895d0*tmp)*tmp)*tmp)/(1.0d0+(3.81095112d0+(2.26216956d0+0.10885141d0*tmp)*tmp)*tmp)-0.636619772367581d0
+      inv_x = 1.0d0/x
+      tmp   = 9.0d0*inv_x*inv_x
+      sqrt_x = dsqrt(x)
+      f0 = 0.79788459d0+(0.01662008d0+(-0.00187002d0+(0.00068519d0+(-0.00029440d0+0.00006952d0*tmp)*tmp)*tmp)*tmp)*tmp
+      theta0 = x-2.35619449019235d0+(0.12499895d0+(-0.00605240d0+(0.00135825d0+(-0.00049616d0+0.00011531d0*tmp)*tmp)*tmp)*tmp)*3.0d0*inv_x
+      res = 2.0d0*f0*dsin(theta0)/sqrt_x+0.636619772367581d0*(1.00000004d0+(3.92205313d0+(2.64893033d0+0.27450895d0*tmp)*tmp)*tmp)/(1.0d0+(3.81095112d0+(2.26216956d0+0.10885141d0*tmp)*tmp)*tmp)-0.636619772367581d0
     endif
   endfunction
 end module

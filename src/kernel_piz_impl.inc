@@ -1,23 +1,20 @@
-subroutine kernel_piz_batch(r, nr, z, nz, res) bind(C, name="kernel_piz_batch")
+subroutine kernel_piz_batch(r, z, n, res) bind(C, name="kernel_piz_batch")
 use iso_c_binding
 implicit none
-integer(c_int), intent(in), value :: nr, nz
-real(c_double), intent(in) :: r(nr), z(nz)
-real(c_double), intent(out) :: res(nr, nz, 4)
+integer(c_int), intent(in), value :: n
+real(c_double), intent(in) :: r(n), z(n)
+real(c_double), intent(out) :: res(4, n)
 
-real(8) :: hh, tmp(4)
-integer :: i, j
+real(8) :: tmp(4)
+integer :: i
 
-!$OMP PARALLEL DO PRIVATE(j, hh, tmp)
-do i = 1, nr
-hh = r(i)
-do j = 1, nz
-      call kernel_piz(hh, z(j), tmp)
-      res(i, j, 1) = tmp(1)
-      res(i, j, 2) = tmp(2)
-      res(i, j, 3) = tmp(3)
-      res(i, j, 4) = tmp(4)
-end do
+!$OMP PARALLEL DO PRIVATE(tmp)
+do i = 1, n
+      call kernel_piz(r(i), z(i), tmp)
+      res(1, i) = tmp(1)
+      res(2, i) = tmp(2)
+      res(3, i) = tmp(3)
+      res(4, i) = tmp(4)
 end do
 !$OMP END PARALLEL DO
 end subroutine

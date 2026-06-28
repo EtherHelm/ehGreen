@@ -130,12 +130,13 @@ Python, C/C++, MATLAB bindings available — see [`examples/`](./examples).
 
 ## Benchmark
 
-10 million evaluations of `kernel_piz` on a uniform grid (10000×1000), measured with the Fortran benchmark in `examples/`.
+10 million calls to `kernel_piz` via ISO_C_BINDING from `libehgreen.so`, measured with the Fortran benchmark in `examples/`. Each metric takes the minimum over three runs.
 
-| Metric | Time |
-|--------|------|
-| **Single thread** | 0.41 s |
-| **32 threads (OpenMP)** | 0.018 s |
+| Metric | Platform 1 | Platform 2 |
+|--------|-----------|-----------|
+| **Single thread** | 0.41 s | 0.141 s |
+| **OpenMP multi-thread** | 0.018 s | 0.018 s |
 
-**Platform:** AMD EPYC 7532 32-Core Processor @ 2.40 GHz (VMware virtualized)  
+**Platform 1:** AMD EPYC 7532 32-Core Processor @ 2.40 GHz (VMware virtualized)  
+**Platform 2:** AMD Ryzen 7 9700X 8-Core Processor @ 3.81 GHz (VM)  
 **Compiler:** gfortran 13.3.0, flags: `-O3 -march=native -mtune=native -funroll-loops -ffast-math -flto -fopenmp`
